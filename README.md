@@ -1,2 +1,54 @@
-# catz-cradle
-Testbed for scala libraries and tools, based on examples from cats docs
+## catz-cradle
+
+### Dedication
+
+> "It's a very difficult job and the only way to get through it is we all work together as a team. 
+> 
+> "And that means you do everything I say."
+>
+> --Charlie Croker, "The Italian Job" (1969)
+
+### Overview
+
+Testbed for scala libraries and tools, based on examples from cats docs, especially for testing
+methods to cross build code written for specific compiler and library versions to other 
+versions of the compiler and libraries and even to different compilers, libraries and more; projects must be able to work independentyly, at the thier own speed, _and_ still be compatible.
+
+In this project we use the cats examples to represent a project that wants to be at the cutting edge, using the latest versions
+of technology. And as cats does, we cross compile to different versions of the scala compiler (2.10.x, 2.11.x. 2.12.x) and also to different platfoms; JVM and JS.
+
+But we want more. 
+
+We want to use Typelevel scala (TLS) as well as Lightbend scala (LBS). But what if we want to use features in TLS not available in LBS? Sure,the code emitted from TLS will work with libraries compiled by LBS - but the code itself cannot compile by LBS. And for some, that represents a risk. But if we could "patch" the newer TLS code by doing a downgrade rewrite at compile time, then we get the best of both worlds - binary and source compatability.
+
+And in the same vein, consider a project built using scalaz that would like to migrate to cats eventually but  need to implement  add
+new functionality for the project now. On the one hand, they would like to use cats as that is their strategic goal, but on the other hand,
+they are still actually using scalaz. So they are really tied in to use scalaz, and this makes migration even harder as new code is added.
+So what if the new code could be written as cats with a  downgrade rewrite performed at compile time? Again, best of both worlds.
+
+And the new code could also not just use cats, but TLS too. And a newer version of Akka, Spark,....
+
+## Solution
+
+We are asking alot to be able to realize our goals, fortunatley help is at hand:
+
+- Example code: This is taken directly from the [cats documentation](https://github.com/typelevel/cats/tree/master/docs/src/main/tut)
+- Cross Building: sbt-cross from [the scala-native project](https://github.com/scala-native/sbt-cross) allows new targets to be defined
+- Rewriting: [scalafix](https://github.com/scalacenter/scalafix) adds general methods for rewriting scala code, on top of the core functionaliy provided by [scalameta](https://github.com/scalameta/scalameta)
+- Bigger testing: the [scala community build](https://github.com/scala/community-builds) can [be adapted](https://github.com/scala/community-builds/pull/478) to test the rewriting on many projects
+
+For now, we need to:
+- Add TLS as a platform to sbt-cross
+- add some SBT support for rewriting source before compilation
+
+## Maintainers
+
+The current maintainers (people who can merge pull requests) are:
+
+ * [BennyHill](https://github.com/BennyHill) Alistair Johnson
+ * [ShaneDelmore](https://github.com/ShaneDelmore) Shane Delmore
+  
+## Participation
+
+The catz-cradle project supports the [Typelevel Code of Conduct](http://typelevel.org/conduct.html) and wants all of its
+channels (mailing list, Gitter, IRC, github, etc.) to be welcoming environments for everyone.
