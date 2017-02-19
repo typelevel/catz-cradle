@@ -75,14 +75,14 @@ This is an example of a library written using the latest scalaz version (7.2.8),
 LBS and TLS on 2.10, 2.11 and 2.12 for JVM and JS (where applicable).
 
 Current Artifacts:
-catzscalazjs_sjs0.6_2.10.jar
-catzscalazjs_sjs0.6_2.11.jar
-catzscalazjs_sjs0.6_2.12.jar
-catzscalazjvm_2.10.jar
-catzscalazjvm_2.11.jar
-catzscalazjvm_2.12.jar
-catzscalaztlsjvm_2.11.jar
-catzscalaztlsjvm_2.12.jar
+- catzscalazjs_sjs0.6_2.10.jar
+- catzscalazjs_sjs0.6_2.11.jar
+- catzscalazjs_sjs0.6_2.12.jar
+- catzscalazjvm_2.10.jar
+- catzscalazjvm_2.11.jar
+- catzscalazjvm_2.12.jar
+- catzscalaztlsjvm_2.11.jar
+- catzscalaztlsjvm_2.12.jar
 
 There are 3 SBT projects for this - catzScalazJS, catzScalazJVM and catzScalazTlsJvm.
 
@@ -95,11 +95,11 @@ LBS and TLS on 2.10 and 2.11  for JVM and JS (where applicable).
 
 Current Artifacts:
 
-catzxorjs_sjs0.6_2.10.jar
-catzxorjs_sjs0.6_2.11.jar
-catzxorjvm_2.10.jar
-catzxorjvm_2.11.jar
-catzxortlsjvm_2.11.jar
+- catzxorjs_sjs0.6_2.10.jar
+- catzxorjs_sjs0.6_2.11.jar
+- catzxorjvm_2.10.jar
+- catzxorjvm_2.11.jar
+- catzxortlsjvm_2.11.jar
 
 There are 3 SBT projects for this - catzXorJS, catzXorJVM and catzXorTlsJvm.
 
