@@ -106,6 +106,15 @@ There are 3 SBT projects for this - catzXorJS, catzXorJVM and catzXorTlsJvm.
 As a maintainer of this library, I would also like to build a version rewritten for cats 0.9.0 and
 scalaz 7.2.8 using the existing source, and also for 2.12 
 
+## EXPERIMENTAL
+
+We are in the very early stages of development. To compile the code,
+[sbt-tls-crossproject](https://github.com/BennyHill/sbt-tls-crossproject) has to be compiled and
+installed with `publishLocal`.
+
+The rewrite code that will eventually live in its own project `catz` is currently in 
+[a branch of scalafix](https://github.com/ShaneDelmore/scalafix/tree/catz)
+
 ## Maintainers
 
 The current maintainers (people who can merge pull requests) are:
