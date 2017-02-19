@@ -1,8 +1,8 @@
 package catz
 
-import cats.Functor
-import cats.instances.list._
-import cats.instances.option._
+import scalaz.Functor
+import scalaz.std.list._
+import scalaz.std.option._
 
 // Functor examples taken from https://github.com/typelevel/cats/blob/master/docs/src/main/tut/typeclasses/functor.md
 object FunctorEx1 {

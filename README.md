@@ -41,6 +41,71 @@ For now, we need to:
 - Add TLS as a platform to sbt-cross
 - add some SBT support for rewriting source before compilation
 
+## Projects:
+
+The main projects in this repository catz, catzXor and catzScalaz have effectively the same code, but 
+based on different base libraries and/or versions.
+
+### catz
+
+This is an example of a library written using the latest cats version (0.9.0), cross built using 
+LBS and TLS on 2.10, 2.11 and 2.12 for JVM and JS (where applicable).
+
+
+Current Artifacts:
+- catzjs_sjs0.6_2.10.jar
+- catzjs_sjs0.6_2.11.jar
+- catzjs_sjs0.6_2.12.jar
+- catzjvm_2.10.jar
+- catzjvm_2.11.jar
+- catzjvm_2.12.jar
+- catztlsjvm_2.11.jar
+- catztlsjvm_2.12.jar
+
+There are 3 SBT projects for this - catzJS, catzJVM and catzTlsJvm.
+
+As a maintainer of this library, I would also like to build a version rewritten for scalaz 7.2.8 and
+cats 0.7.2 using the existing source
+
+This would require 6 extra SBT projects for this, currently provided by the catzScalaz and catsXor projects
+
+### catzScalaz
+
+This is an example of a library written using the latest scalaz version (7.2.8), cross built using 
+LBS and TLS on 2.10, 2.11 and 2.12 for JVM and JS (where applicable).
+
+Current Artifacts:
+catzscalazjs_sjs0.6_2.10.jar
+catzscalazjs_sjs0.6_2.11.jar
+catzscalazjs_sjs0.6_2.12.jar
+catzscalazjvm_2.10.jar
+catzscalazjvm_2.11.jar
+catzscalazjvm_2.12.jar
+catzscalaztlsjvm_2.11.jar
+catzscalaztlsjvm_2.12.jar
+
+There are 3 SBT projects for this - catzScalazJS, catzScalazJVM and catzScalazTlsJvm.
+
+As a maintainer of this library, I would also like to build a version rewritten for cats 0.7.2 and
+cats 0.9.0 using the existing source
+
+### catzXoR
+This is an example of a library written using an older cats version (0.7.2), cross built using 
+LBS and TLS on 2.10 and 2.11  for JVM and JS (where applicable).
+
+Current Artifacts:
+
+catzxorjs_sjs0.6_2.10.jar
+catzxorjs_sjs0.6_2.11.jar
+catzxorjvm_2.10.jar
+catzxorjvm_2.11.jar
+catzxortlsjvm_2.11.jar
+
+There are 3 SBT projects for this - catzXorJS, catzXorJVM and catzXorTlsJvm.
+
+As a maintainer of this library, I would also like to build a version rewritten for cats 0.9.0 and
+scalaz 7.2.8 using the existing source, and also for 2.12 
+
 ## Maintainers
 
 The current maintainers (people who can merge pull requests) are:

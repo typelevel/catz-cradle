@@ -22,7 +22,11 @@ lazy val sharedSettings = commonSettings //++ publishSettings ++ scoverageSettin
 
 
 lazy val root = project.in(file("."))
-  .aggregate(catzJS, catzJVM, catzTlsJvm, ratzJS, ratzJVM, ratzNative, ratzTlsJvm)
+  .aggregate(
+    catzJS, catzJVM, catzTlsJvm,
+    catzXorJS, catzXorJVM, catzXorTlsJvm,
+    catzScalazJS, catzScalazJVM, catzScalazTlsJvm,
+    ratzJS, ratzJVM, ratzNative, ratzTlsJvm)
   .settings(sharedSettings:_*)
   .settings(scalaVersion := "2.11.8")
   .settings(noPublishSettings)
@@ -35,7 +39,11 @@ lazy val catz = crossProject(JSPlatform, JVMPlatform, TlsJvmPlatform)
       scalaVersion := "2.12.1",
       crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
     )
-    .settings(libraryDependencies += "org.typelevel" %%% "cats-core" % "0.9.0" % "provided")
+    .settings(
+      libraryDependencies ++= Seq(
+        "org.typelevel" %%% "cats-core" % "0.9.0",
+        "org.scalatest" %%% "scalatest" % "3.0.0" % "test")
+    )
     .jsSettings(sharedJsSettings)
     .jvmSettings(sharedJvmSettings)
      .tlsJvmSettings(
@@ -45,7 +53,53 @@ lazy val catz = crossProject(JSPlatform, JVMPlatform, TlsJvmPlatform)
 
 lazy val catzJS     = catz.js
 lazy val catzJVM    = catz.jvm
-lazy val catzTlsJvm    = catz.tlsJvm
+lazy val catzTlsJvm = catz.tlsJvm
+
+lazy val catzXor = crossProject(JSPlatform, JVMPlatform, TlsJvmPlatform)
+  .crossType(CrossType.Pure)
+  .settings(sharedSettings)
+  .settings(
+    scalaVersion := "2.11.8",
+    crossScalaVersions := Seq("2.10.6", "2.11.8")
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core" % "0.7.2",
+      "org.scalatest" %%% "scalatest" % "3.0.0" % "test")
+  )
+  .jsSettings(sharedJsSettings)
+  .jvmSettings(sharedJvmSettings)
+  .tlsJvmSettings(
+    scalaVersion := "2.11.8",
+    crossScalaVersions := Seq("2.11.8")
+  )
+
+lazy val catzXorJS     = catzXor.js
+lazy val catzXorJVM    = catzXor.jvm
+lazy val catzXorTlsJvm = catzXor.tlsJvm
+
+lazy val catzScalaz = crossProject(JSPlatform, JVMPlatform, TlsJvmPlatform)
+  .crossType(CrossType.Pure)
+  .settings(sharedSettings)
+  .settings(
+    scalaVersion := "2.12.1",
+    crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.scalaz"    %%% "scalaz-core" % "7.2.8",
+      "org.scalatest" %%% "scalatest"   % "3.0.0" % "test")
+  )
+  .jsSettings(sharedJsSettings)
+  .jvmSettings(sharedJvmSettings)
+  .tlsJvmSettings(
+    scalaVersion := "2.12.1",
+    crossScalaVersions := Seq("2.11.8", "2.12.1")
+  )
+
+lazy val catzScalazJS     = catzScalaz.js
+lazy val catzScalazJVM    = catzScalaz.jvm
+lazy val catzScalazTlsJvm = catzScalaz.tlsJvm
 
 lazy val ratz =
   crossProject(JSPlatform, JVMPlatform, NativePlatform, TlsJvmPlatform)
@@ -71,6 +125,14 @@ lazy val ratzJS     = ratz.js
 lazy val ratzJVM    = ratz.jvm
 lazy val ratzNative = ratz.native
 lazy val ratzTlsJvm    = ratz.tlsJvm
+
+lazy val rewrite = project
+ .settings(sharedSettings)
+    .settings(
+      scalaVersion := "2.12.1",
+      crossScalaVersions := Seq("2.11.8", "2.12.1"),
+      libraryDependencies += "ch.epfl.scala" %% "scalafix-nsc" % "0.2.3-SNAPSHOT"
+    )
 
 // SBT Boilerplate
 
