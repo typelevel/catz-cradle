@@ -49,7 +49,8 @@ based on different base libraries and/or versions.
 ### catz
 
 This is an example of a library written using the latest cats version (0.9.0), cross built using 
-LBS and TLS on 2.10, 2.11 and 2.12 for JVM and JS (where applicable).
+LBS and TLS on 2.10, 2.11 and 2.12 for JVM and JS (where applicable). 
+catz1 is built against cats 0.7.2 using TLS, so is 2.11 only
 
 
 Current Artifacts:
@@ -61,6 +62,8 @@ Current Artifacts:
 - catzjvm_2.12.jar
 - catztlsjvm_2.11.jar
 - catztlsjvm_2.12.jar
+- catz1_2.11.jar
+- catz1_sjs0.6_2.11.jar
 
 There are 3 SBT projects for this - catzJS, catzJVM and catzTlsJvm.
 
