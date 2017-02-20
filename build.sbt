@@ -15,7 +15,7 @@ lazy val commonSettings = Seq(
   scalacOptions ++= scalacAllOptions,
   incOptions := incOptions.value.withLogRecompileOnMacro(false),
   parallelExecution in Test := false,
- updateOptions := updateOptions.value.withCachedResolution(true)
+  updateOptions := updateOptions.value.withCachedResolution(true)
 ) ++ warnUnusedImport ++ update2_12
 
 lazy val sharedSettings = commonSettings //++ publishSettings ++ scoverageSettings
@@ -23,7 +23,8 @@ lazy val sharedSettings = commonSettings //++ publishSettings ++ scoverageSettin
 
 lazy val root = project.in(file("."))
   .aggregate(
-    catzJS, catzJVM, catzTlsJvm,
+    catz,
+    //catzJS, catzJVM, catzTlsJvm,
     catzXorJS, catzXorJVM, catzXorTlsJvm,
     catzScalazJS, catzScalazJVM, catzScalazTlsJvm,
     ratzJS, ratzJVM, ratzNative, ratzTlsJvm)
@@ -32,29 +33,68 @@ lazy val root = project.in(file("."))
   .settings(noPublishSettings)
 .enablePlugins(CrossPerProjectPlugin)
 
-lazy val catz = crossProject(JSPlatform, JVMPlatform, TlsJvmPlatform)
-    .crossType(CrossType.Pure)
-    .settings(sharedSettings)
-    .settings(
-      scalaVersion := "2.12.1",
-      crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
-    )
-    .settings(
-      libraryDependencies ++= Seq(
-        "org.typelevel" %%% "cats-core" % "0.9.0",
-        "org.scalatest" %%% "scalatest" % "3.0.0" % "test")
-    )
-    .jsSettings(sharedJsSettings)
-    .jvmSettings(sharedJvmSettings)
-     .tlsJvmSettings(
-       scalaVersion := "2.12.1",
-       crossScalaVersions := Seq("2.11.8", "2.12.1")
-    )
+// sbt project for the CrossProject catzCP
+lazy val catz = project.in(file("catz/.prj"))
+  .settings(sharedSettings)
+  .settings(noPublishSettings)
+  .aggregate(catzJS, catzJVM, catzTlsJs, catzTlsJs1, catzTlsJvm, catzTlsJvm1)
+  .enablePlugins(CrossPerProjectPlugin)
 
-lazy val catzJS     = catz.js
-lazy val catzJVM    = catz.jvm
-lazy val catzTlsJvm = catz.tlsJvm
+// Todo: Add JSPlatform1, JVMPlatform1
+// Todo: If the core code also used another library, eg shapeless, we might also need to have two versions of that, too.
+//       So then we might need *2* for each platforms...or for even *4* for all combinations. And for three libraries.....
+// Todo: publishing JSPlatform and TlsJsPlatform give the same artifact name, so we either have to add a new
+//       groupid (bad!) or decide which one we want to publish. Same for jvm and native
+lazy val catzCP = crossProject(JSPlatform, JVMPlatform, TlsJsPlatform, TlsJs1Platform, TlsJvmPlatform, TlsJvm1Platform)
+  .crossType(CrossType.Pure)
+  .in(file("catz"))
+  .settings(moduleName := "catz")
+  .settings(sharedSettings)
+  .settings(
+    scalaVersion := "2.12.1",
+    crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core" % "0.9.0",
+      "org.scalatest" %%% "scalatest" % "3.0.0" % "test")
+  )
+  .jsSettings(sharedJsSettings)
+  .jvmSettings(sharedJvmSettings)
+  .tlsJsSettings(sharedJsSettings, sharedTlsSettings)
+  .tlsJs1Settings(
+    // Same as tlsJs, but compiled againgt cat 0.7.2 - see comments in tlsJvm1Settings fro more details
+    sharedJsSettings,
+    sharedTlsSettings,scalaVersion := "2.11.8",
+    moduleName := "catz1",
+    crossScalaVersions := Seq("2.11.8"),
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core" % "0.7.2"))
+  .tlsJvmSettings(sharedTlsSettings)
+  .tlsJvm1Settings(
+    // Same as tlsJvm, but compiled againgt cat 0.7.2
+    // As the main code is written for cats 0.9.0, some code may not work out-of-the-box.
+    // So we would either have to make this a CrossType.Full and add changes in the
+    // non-shared code directory, or (preferably) rewrite the code before compiling.
+    // Note (1) that TLS is 2.11/2.12 only, but cats 0.7.2 is 2.10/2.11 only
+    // Note (2) that we would also want to do this for JS1Platform and JVM1 platform
+    // Note (3) that there is way too much boilerplate!!
+    moduleName := "catz1",
+    scalaVersion := "2.11.8",
+    crossScalaVersions := Seq("2.11.8"),
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core" % "0.7.2")
+    //.settings(sourceGenerators in Compile += (sourceManaged in Compile).map(Cats9To7rewrite.gen).taskValue)
+  )
 
+lazy val catzJS      = catzCP.js
+lazy val catzJVM     = catzCP.jvm
+lazy val catzTlsJvm  = catzCP.tlsJvm
+lazy val catzTlsJvm1 = catzCP.tlsJvm1
+lazy val catzTlsJs   = catzCP.tlsJs
+lazy val catzTlsJs1  = catzCP.tlsJs1
+
+//
 lazy val catzXor = crossProject(JSPlatform, JVMPlatform, TlsJvmPlatform)
   .crossType(CrossType.Pure)
   .settings(sharedSettings)
@@ -235,3 +275,7 @@ lazy val sharedNativeSettings = Seq(
   crossScalaVersions := Seq("2.11.8")
 )
 
+lazy val sharedTlsSettings = Seq(
+  scalaVersion := "2.12.1",
+  crossScalaVersions := Seq("2.11.8", "2.12.1")
+)
