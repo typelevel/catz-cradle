@@ -32,12 +32,11 @@ object Main {
     // to, roughly speaking, fully-qualified names. Future releases will feature more functionality.
     // See https://github.com/scalameta/scalameta/issues/604 for a roadmap.
     println("looking for term...")
-    println(s"number of sources: ${mirror.sources.toList.length}")
     mirror.sources.foreach(source => {
       println(source)
       source.collect {
-        case ref =>
-          println(ref)
+        case ref @ Term.Name("_root_.catz.`SemigroupEx1`.") =>
+          println(ref.symbol)
       }
     })
   }
