@@ -169,6 +169,7 @@ lazy val ratzTlsJvm    = ratz.tlsJvm
 lazy val rewrite = project
  .settings(sharedSettings)
     .settings(
+      resolvers += Resolver.bintrayIvyRepo("scalameta", "maven"),
       scalaVersion := "2.12.1",
       crossScalaVersions := Seq("2.11.8", "2.12.1")
     ).dependsOn(catzJVM % Scalameta)

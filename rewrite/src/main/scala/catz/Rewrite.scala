@@ -25,6 +25,7 @@ object Main {
     // This semantic database is generated from source files in /library/src/main/scala.
     // See build.sbt for more details.
     println(mirror.database)
+    org.scalameta.logger.elem(sys.props, sys.props.get("scalameta.sourcepath"), mirror.sources, mirror.sources.length)
 
     // On top of a semantic database, scala.meta provides high-level semantic APIs.
     // In the current release, there's only `Ref.symbol`, which resolves references
