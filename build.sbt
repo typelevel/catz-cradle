@@ -6,7 +6,7 @@ import sbtcross.{crossProject, CrossType}
 addCommandAlias("validateJVM", ";catsJVM/test")
 addCommandAlias("validateJS",  ";catsJS/test")
 addCommandAlias("validate",    ";validateJS;validateJVM")
-addCommandAlias("validateAll", s""";+clean;+validate""") 
+addCommandAlias("validateAll", s""";+clean;+validate""")
 addCommandAlias("gitSnapshots", ";set version in ThisBuild := git.gitDescribedVersion.value.get + \"-SNAPSHOT\"")
 
 organization in ThisBuild := "org.typelevel"
@@ -170,9 +170,8 @@ lazy val rewrite = project
  .settings(sharedSettings)
     .settings(
       scalaVersion := "2.12.1",
-      crossScalaVersions := Seq("2.11.8", "2.12.1"),
-      libraryDependencies += "ch.epfl.scala" %% "scalafix-nsc" % "0.2.3-SNAPSHOT"
-    )
+      crossScalaVersions := Seq("2.11.8", "2.12.1")
+    ).dependsOn(catzJVM % Scalameta)
 
 // SBT Boilerplate
 
