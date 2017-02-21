@@ -11,3 +11,9 @@ addSbtPlugin("org.scala-native" % "sbt-cross"             % "0.1.0-SNAPSHOT")
 addSbtPlugin("org.scala-native" % "sbt-scalajs-cross"     % "0.1.0-SNAPSHOT")
 addSbtPlugin("org.scala-native" % "sbt-scala-native"      % "0.1.0-SNAPSHOT")
 addSbtPlugin("org.typelevel"    % "sbt-tls-crossproject"  % "0.1.0-SNAPSHOT")
+
+//First publish the sbt-scalahost plugin to get the correct version to use.
+//The easiest way to publish the plugin and all of it's dependencies is to
+//clone scalameta then run sbt scalahostSbt/test which will publish all
+//dependencies, publish the plugin, then test the plugin.
+addSbtPlugin("org.scalameta"    % "sbt-scalahost"         % "1.6.0-690.1487702808927")
