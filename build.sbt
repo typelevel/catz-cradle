@@ -24,6 +24,7 @@ lazy val sharedSettings = commonSettings //++ publishSettings ++ scoverageSettin
 lazy val root = project.in(file("."))
   .aggregate(
     catz,
+    rewrite,
     //catzJS, catzJVM, catzTlsJvm,
     catzXorJS, catzXorJVM, catzXorTlsJvm,
     catzScalazJS, catzScalazJVM, catzScalazTlsJvm,
@@ -170,6 +171,7 @@ lazy val rewrite = project
  .settings(sharedSettings)
     .settings(
       resolvers += Resolver.bintrayIvyRepo("scalameta", "maven"),
+      libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.3.0",
       scalaVersion := "2.12.1",
       crossScalaVersions := Seq("2.11.8", "2.12.1")
     ).dependsOn(catzJVM % Scalameta)

@@ -1,6 +1,12 @@
+package catz
 import scala.meta._
+import scalafix._
+import scala.collection.immutable.Seq
+import scalafix.util.Patch
+import scalafix.util.TreePatch._
+import org.scalameta.logger
 
-object Main {
+object Rewrite {
   def main(args: Array[String]): Unit = {
     // A mirror is a gateway into the scala.meta semantic API.
     // The majority of semantic APIs require an implicit mirror.
@@ -24,8 +30,7 @@ object Main {
     //
     // This semantic database is generated from source files in /library/src/main/scala.
     // See build.sbt for more details.
-    println(mirror.database)
-    org.scalameta.logger.elem(sys.props, sys.props.get("scalameta.sourcepath"), mirror.sources, mirror.sources.length)
+    logger.elem(mirror.database)
 
     // On top of a semantic database, scala.meta provides high-level semantic APIs.
     // In the current release, there's only `Ref.symbol`, which resolves references
@@ -33,11 +38,16 @@ object Main {
     // See https://github.com/scalameta/scalameta/issues/604 for a roadmap.
     println("looking for term...")
     mirror.sources.foreach(source => {
-      println(source)
+      logger.elem(source)
+      implicit val ctx =
+        rewrite.RewriteCtx(source, config.ScalafixConfig(), mirror)
       source.collect {
         case ref @ Term.Name("_root_.catz.`SemigroupEx1`.") =>
-          println(ref.symbol)
+          logger.elem(ref.symbol)
       }
+      val patched =
+        Patch(source, Seq(Replace(Symbol("_root_.catz."), q"catzz")))
+      logger.elem(patched)
     })
   }
 }
