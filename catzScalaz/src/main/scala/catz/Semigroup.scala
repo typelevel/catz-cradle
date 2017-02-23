@@ -1,6 +1,8 @@
 package catz
 
 import scalaz.Semigroup
+import scalaz._
+import Scalaz._
 
 // Semigroup ecamples taken from https://github.com/typelevel/cats/blob/master/docs/src/main/tut/typeclasses/semigroup.md
 object SemigroupEx1 {
@@ -18,4 +20,91 @@ object SemigroupEx1 {
   val combine2 = Semigroup[Int].append(x, Semigroup[Int].append(y, z))
 
   val combine3 = Semigroup[Int].append(Semigroup[Int].append(x, y), z)
+}
+
+object SemigroupEx2 {
+
+  implicit val intAdditionSemigroup: Semigroup[Int] = new Semigroup[Int] {
+    def append(x: Int, y: => Int): Int = x + y
+  }
+
+  val combine1 = 1 |+| 2
+  // combine1: Int = 3
+
+}
+
+object SemigroupEx3 {
+
+  implicit val intAdditionSemigroup: Semigroup[Int] = new Semigroup[Int] {
+    def append(x: Int, y: => Int): Int = x + y
+  }
+
+  val map1 = Map("hello" -> 0, "world" -> 1)
+  val map2 = Map("hello" -> 2, "cats"  -> 3)
+
+  val combineMap1 = Semigroup[Map[String, Int]].append(map1, map2)
+  // combineMap1: Map[String,Int] = Map(hello -> 2, cats -> 3, world -> 1)
+
+  val combineMap2 = map1 |+| map2
+  // combineMap2: Map[String,Int] = Map(hello -> 2, cats -> 3, world -> 1)
+
+}
+
+object SemigroupEx4 {
+
+  def optionCombine[A: Semigroup](a: A, opt: Option[A]): A =
+    opt.map(a |+| _).getOrElse(a)
+
+  def mergeMap[K, V: Semigroup](lhs: Map[K, V], rhs: Map[K, V]): Map[K, V] =
+    lhs.foldLeft(rhs) {
+      case (acc, (k, v)) => acc.updated(k, optionCombine(v, acc.get(k)))
+    }
+
+  val xm1 = Map('a' -> 1, 'b' -> 2)
+  // xm1: scala.collection.immutable.Map[Char,Int] = Map(a -> 1, b -> 2)
+
+  val xm2 = Map('b' -> 3, 'c' -> 4)
+  // xm2: scala.collection.immutable.Map[Char,Int] = Map(b -> 3, c -> 4)
+
+  val x = mergeMap(xm1, xm2)
+  // x: Map[Char,Int] = Map(b -> 5, c -> 4, a -> 1)
+
+  val ym1 = Map(1 -> List("hello"))
+  // ym1: scala.collection.immutable.Map[Int,List[String]] = Map(1 -> List(hello))
+
+  val ym2 = Map(2 -> List("cats"), 1 -> List("world"))
+  // ym2: scala.collection.immutable.Map[Int,List[String]] = Map(2 -> List(cats), 1 -> List(world))
+
+  val y = mergeMap(ym1, ym2)
+  // y: Map[Int,List[String]] = Map(2 -> List(cats), 1 -> List(hello, world))
+
+
+  val xb = Semigroup[Map[Char, Int]].append(xm1, xm2) == x
+  // xb: Boolean = true
+
+  val yb = Semigroup[Map[Int, List[String]]].append(ym1, ym2) == y
+  // yb: Boolean = true
+
+}
+
+object SemigroupEx5 {
+
+  val leftwards = List(1, 2, 3).foldLeft(0)(_ |+| _)
+  // leftwards: Int = 6
+
+  val rightwards = List(1, 2, 3).foldRight(0)(_ |+| _)
+  // rightwards: Int = 6
+
+  val list = List(1, 2, 3, 4, 5)
+  val (left, right) = list.splitAt(2)
+
+  val sumLeft = left.foldLeft(0)(_ |+| _)
+  // sumLeft: Int = 3
+
+  val sumRight = right.foldLeft(0)(_ |+| _)
+  // sumRight: Int = 12
+
+  val result = sumLeft |+| sumRight
+  // result: Int = 15
+
 }
