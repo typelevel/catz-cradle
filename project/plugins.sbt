@@ -16,4 +16,4 @@ addSbtPlugin("org.typelevel"    % "sbt-tls-crossproject"  % "0.1.0-SNAPSHOT")
 //The easiest way to publish the plugin and all of it's dependencies is to
 //clone scalameta then run sbt scalahostSbt/test which will publish all
 //dependencies, publish the plugin, then test the plugin.
-addSbtPlugin("org.scalameta"    % "sbt-scalahost"         % "1.6.0-690.1487702808927")
+addSbtPlugin("org.scalameta"    % "sbt-scalahost"         % "1.6.0")
