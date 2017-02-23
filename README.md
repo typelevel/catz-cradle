@@ -124,7 +124,8 @@ The current maintainers (people who can merge pull requests) are:
 
  * [BennyHill](https://github.com/BennyHill) Alistair Johnson
  * [ShaneDelmore](https://github.com/ShaneDelmore) Shane Delmore
-  
+ * [ChristopherDavenport](https://github.com/ChristopherDavenport) Chris Davenport
+
 ## Participation
 
 The catz-cradle project supports the [Typelevel Code of Conduct](http://typelevel.org/conduct.html) and wants all of its
