@@ -15,3 +15,18 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+
+.idea
+.idea/*
+.idea_modules
+.ensime
+.ensime_cache
+.DS_Store
+.sbtrc
+*.sublime-project
+*.sublime-workspace
+.*.swp
+TAGS
+\#*#
+*~
+.#*
