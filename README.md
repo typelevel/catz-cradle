@@ -1,4 +1,4 @@
-## catz-cradle
+## catz-cradle [![Build Status](https://travis-ci.org/typelevel/catz-cradle.svg?branch=master)](https://travis-ci.org/typelevel/catz-cradle)
 
 ### Dedication
 
