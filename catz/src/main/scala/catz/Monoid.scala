@@ -39,3 +39,28 @@ object MonoidEx2 {
   // combineAll4: scala.collection.immutable.Set[Int] = Set(5, 1, 2, 3, 4)
 
 }
+
+object MonoidEx3 {
+  import cats.data.NonEmptyList
+  import cats.instances.option._
+  import cats.Semigroup
+
+  // for any Semigroup[A], there is a Monoid[Option[A]]
+  // This lifting and combining of Semigroups into Option is provided by Cats as Semigroup.combineAllOption
+
+  val list1 = List(NonEmptyList(1, List(2, 3)), NonEmptyList(4, List(5, 6)))
+  val lifted1 = list1.map(nel => Option(nel))
+
+  val optionMonoid1 = Monoid.combineAll(lifted1)
+  // optionMonoid1: Option[cats.data.NonEmptyList[Int]] = Some(NonEmptyList(1, 2, 3, 4, 5, 6))
+
+  val list2 = List.empty[NonEmptyList[Int]]
+  val lifted2 = list2.map(nel => Option(nel))
+
+  val optionMonoid2 = Monoid.combineAll(lifted2)
+  // optionMonoid2: Option[cats.data.NonEmptyList[Int]] = None
+
+  val list3 = List(NonEmptyList(1, List(2, 3)), NonEmptyList(4, List(5, 6)))
+  val optionMonoid3 = Semigroup.combineAllOption(list3)
+
+}

@@ -16,4 +16,11 @@ class MonoidTests extends CatzSuite {
     MonoidEx2.combineAll4 shouldBe Set(5,1,2,3,4)
   }
 
+  test("MonoidEx3 tests") {
+    import cats.data.NonEmptyList
+    MonoidEx3.optionMonoid1 shouldBe Some(NonEmptyList.of(1,2,3,4,5,6))
+    MonoidEx3.optionMonoid2 shouldBe None
+    MonoidEx3.optionMonoid3 shouldBe Some(NonEmptyList.of(1,2,3,4,5,6))
+  }
+
 }
