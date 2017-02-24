@@ -32,6 +32,5 @@ before_script:
   - sbt publishLocal
   - cd ..
 
-
 script:
   - sbt test
