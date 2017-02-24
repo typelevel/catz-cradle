@@ -1,8 +1,7 @@
 package catz
 
-import cats.Monoid
-
 object MonoidEx1 {
+  import cats.Monoid
 
   implicit val intAdditionMonoid: Monoid[Int] = new Monoid[Int] {
     def empty: Int = 0
@@ -20,6 +19,7 @@ object MonoidEx1 {
 }
 
 object MonoidEx2 {
+  import cats.Monoid
   import cats.instances.all._
 
   // Written here, provided in Monoid.combineAll
@@ -41,6 +41,7 @@ object MonoidEx2 {
 }
 
 object MonoidEx3 {
+  import cats.Monoid
   import cats.data.NonEmptyList
   import cats.instances.option._
   import cats.Semigroup
