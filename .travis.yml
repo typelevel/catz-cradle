@@ -25,8 +25,10 @@ before_cache:
 before_script:
   - mkdir -p $HOME/.sbt/launchers/$SBT_VERSION/
   - curl -L -o $HOME/.sbt/launchers/$SBT_VERSION/sbt-launch.jar http://dl.bintray.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar
-  - wget -nc -O - https://github.com/typelevel/sbt-tls-crossproject/archive/master.zip | gunzip -
-  - cd master
+  - mkdir sbt-tls-crossproject
+  - cd sbt-tls-crossproject
+  - wget -O - https://github.com/typelevel/sbt-tls-crossproject/archive/master.zip
+  - unzip master.zip
   - sbt publishLocal
   - cd ..
 
