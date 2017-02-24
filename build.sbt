@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import sbtcross.{crossProject, CrossType}
+import sbtcrossproject.{crossProject, CrossType}
 
 
 addCommandAlias("validateJVM", ";catsJVM/test")
