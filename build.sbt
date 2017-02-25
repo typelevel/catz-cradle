@@ -3,8 +3,8 @@ import Keys._
 import sbtcrossproject.{crossProject, CrossType}
 
 
-addCommandAlias("validateJVM", ";catsJVM/test")
-addCommandAlias("validateJS",  ";catsJS/test")
+addCommandAlias("validateJVM", ";catzJVM/test")
+addCommandAlias("validateJS",  ";catzJS/test")
 addCommandAlias("validate",    ";validateJS;validateJVM")
 addCommandAlias("validateAll", s""";+clean;+validate""")
 addCommandAlias("gitSnapshots", ";set version in ThisBuild := git.gitDescribedVersion.value.get + \"-SNAPSHOT\"")
@@ -25,7 +25,7 @@ lazy val root = project.in(file("."))
   .aggregate(
     catz,
     rewrite,
-    //catzJS, catzJVM, catzTlsJvm,
+    catzJS, catzJVM, catzTlsJvm,
     catzXorJS, catzXorJVM, catzXorTlsJvm,
     catzScalazJS, catzScalazJVM, catzScalazTlsJvm,
     ratzJS, ratzJVM, ratzNative, ratzTlsJvm)
