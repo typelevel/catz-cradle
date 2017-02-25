@@ -1,12 +1,16 @@
 language: scala
 
+sudo: required
+
+dist: trusty
+
 scala:
+  - 2.10.6
+  - 2.11.8
   - 2.12.1
 
 jdk:
   - oraclejdk8
-
-sudo: false
 
 cache:
   directories:
@@ -31,4 +35,4 @@ before_script:
   - cd ..
 
 script:
-  - sbt +test
+  - sbt test
