@@ -31,4 +31,4 @@ before_script:
   - cd ..
 
 script:
-  - sbt test
+  - sbt +test
