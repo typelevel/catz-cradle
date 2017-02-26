@@ -1,6 +1,8 @@
 *.class
 *.log
 
+sbt-tls-crossproject-master/
+
 # sbt specific
 .cache
 .history

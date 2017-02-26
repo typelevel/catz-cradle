@@ -91,7 +91,18 @@ lazy val catzCP = crossProject(JSPlatform, JVMPlatform, TlsJsPlatform, TlsJs1Pla
 lazy val catzJS      = catzCP.js
 lazy val catzJVM     = catzCP.jvm
 lazy val catzTlsJvm  = catzCP.tlsJvm
-lazy val catzTlsJvm1 = catzCP.tlsJvm1
+lazy val catzTlsJvm1 = catzCP.tlsJvm1.settings(
+  // naive way to exclude catz/src/main/scala
+  sourceDirectories.in(Compile) ~= { _.filter(_.getAbsolutePath.contains(".")) },
+  compileInputs.in(Compile, compile) := {
+    compileInputs.in(Compile, compile).dependsOn(
+      // run rewrites before compile
+      run.in(rewrite, Compile).toTask("")
+    ).value
+  }
+)
+
+val runRewrites = taskKey[Unit]("run rewrites")
 lazy val catzTlsJs   = catzCP.tlsJs
 lazy val catzTlsJs1  = catzCP.tlsJs1
 

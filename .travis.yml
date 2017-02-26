@@ -27,12 +27,7 @@ before_cache:
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
 
 before_script:
-  - wget -O master.zip https://github.com/typelevel/sbt-tls-crossproject/archive/master.zip
-  - unzip master.zip
-  - rm master.zip
-  - cd sbt-tls-crossproject-master
-  - sbt publishLocal
-  - cd ..
+  - ./before_script.sh
 
 script:
   - sbt test
