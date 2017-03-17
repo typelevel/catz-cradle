@@ -1,5 +1,6 @@
 package catz
 
+// Id Examples Taken From http://typelevel.org/cats/typeclasses/id.html
 object IdEx1 {
   import cats.Id
   import cats.Functor
