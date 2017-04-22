@@ -30,4 +30,4 @@ before_script:
   - ./before_script.sh
 
 script:
-  - sbt test
+  - sbt +++$TRAVIS_SCALA_VERSION test
